@@ -1,0 +1,19 @@
+# SPDX-License-Identifier: AGPL-3.0-only
+[package]
+name = "myapp-canonical"
+description = "Deterministic CBOR canonical encoding for signed structures (ADR-013)."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+authors.workspace = true
+publish.workspace = true
+
+[dependencies]
+bytes = { workspace = true }
+thiserror = { workspace = true }
+ciborium = { workspace = true }
+
+[lints]
+workspace = true

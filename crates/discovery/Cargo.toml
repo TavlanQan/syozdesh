@@ -1,0 +1,22 @@
+# SPDX-License-Identifier: AGPL-3.0-only
+[package]
+name = "myapp-discovery"
+description = "Relay discovery: built-in seeds, DNS SRV, cached healthy relays."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+authors.workspace = true
+publish.workspace = true
+
+[dependencies]
+myapp-core = { workspace = true }
+myapp-protocol = { workspace = true }
+hickory-resolver = { workspace = true }
+tokio = { workspace = true }
+thiserror = { workspace = true }
+tracing = { workspace = true }
+
+[lints]
+workspace = true

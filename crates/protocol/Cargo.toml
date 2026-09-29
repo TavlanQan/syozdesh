@@ -1,0 +1,20 @@
+# SPDX-License-Identifier: AGPL-3.0-only
+[package]
+name = "myapp-protocol"
+description = "Wire-protocol types and framing (EnvelopeV1, Message)."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+authors.workspace = true
+publish.workspace = true
+
+[dependencies]
+bytes = { workspace = true }
+thiserror = { workspace = true }
+prost = { workspace = true }
+prost-types = { workspace = true }
+
+[lints]
+workspace = true

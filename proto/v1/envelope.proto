@@ -1,0 +1,9 @@
+// SPDX-License-Identifier: AGPL-3.0-only
+syntax = "proto3";
+package myapp.v1;
+
+// EnvelopeV1 — relay-visible envelope. FROZEN in Phase 4.
+// Protobuf bytes are NEVER used as a signing representation (ADR-013).
+message EnvelopeV1 {
+  // Phase 6.
+}

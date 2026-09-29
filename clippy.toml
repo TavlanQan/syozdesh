@@ -1,0 +1,8 @@
+# SPDX-License-Identifier: AGPL-3.0-only
+msrv = "1.93.1"
+avoid-breaking-exported-api = false
+
+disallowed-methods = [
+    { path = "std::env::set_var",    reason = "Unsafe in multithreaded programs (Rust 2024)." },
+    { path = "std::env::remove_var", reason = "Unsafe in multithreaded programs (Rust 2024)." },
+]

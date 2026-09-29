@@ -1,0 +1,27 @@
+# SPDX-License-Identifier: AGPL-3.0-only
+[package]
+name = "myapp-client"
+description = "Client composition root: wires core traits to adapters."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+authors.workspace = true
+publish.workspace = true
+
+[dependencies]
+myapp-core = { workspace = true }
+myapp-protocol = { workspace = true }
+myapp-canonical = { workspace = true }
+myapp-crypto = { workspace = true }
+myapp-storage = { workspace = true }
+myapp-transport = { workspace = true }
+myapp-discovery = { workspace = true }
+myapp-media = { workspace = true }
+tokio = { workspace = true }
+thiserror = { workspace = true }
+tracing = { workspace = true }
+
+[lints]
+workspace = true

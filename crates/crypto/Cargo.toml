@@ -1,0 +1,33 @@
+# SPDX-License-Identifier: AGPL-3.0-only
+[package]
+name = "myapp-crypto"
+description = "Cryptographic primitives, domain-separated HKDF, PQXDH session provider."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+authors.workspace = true
+publish.workspace = true
+
+[dependencies]
+myapp-core = { workspace = true }
+myapp-canonical = { workspace = true }
+
+ed25519-dalek = { workspace = true }
+x25519-dalek = { workspace = true }
+hkdf = { workspace = true }
+sha2 = { workspace = true }
+chacha20poly1305 = { workspace = true }
+argon2 = { workspace = true }
+rand_core = { workspace = true }
+zeroize = { workspace = true }
+subtle = { workspace = true }
+thiserror = { workspace = true }
+
+# BLOCKING(Phase 5.5-A): replace with real 40-char commit SHA before
+# declaring Phase 5 frozen. See docs/PHASE_5_5_A.md §4.
+libsignal-protocol = { git = "https://github.com/signalapp/libsignal", rev = "0000000000000000000000000000000000000000" }
+
+[lints]
+workspace = true

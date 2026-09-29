@@ -1,0 +1,97 @@
+# SPDX-License-Identifier: AGPL-3.0-only
+#
+# myapp — Multiplatform E2E messenger (workspace root).
+# See docs/ARCHITECTURE.md and docs/DECISIONS.md (ADR-001..014).
+
+[workspace]
+resolver = "3"
+members = [
+    "crates/protocol",
+    "crates/canonical",
+    "crates/core",
+    "crates/crypto",
+    "crates/storage",
+    "crates/transport",
+    "crates/discovery",
+    "crates/media",
+    "crates/client",
+    "crates/relay",
+    "crates/cli",
+    "crates/tools",
+    "apps/desktop/src-tauri",
+]
+exclude = [
+    "apps/android",
+    "fuzz",
+]
+
+[workspace.package]
+version      = "0.1.0"
+edition      = "2024"
+rust-version = "1.93.1"
+license      = "AGPL-3.0-only"
+repository   = "https://forgejo.invalid/myapp/myapp"
+authors      = ["myapp contributors"]
+homepage     = "https://forgejo.invalid/myapp/myapp"
+publish      = false
+
+[workspace.dependencies]
+# ---- Internal crates (path only; never published) ------------------------
+myapp-canonical = { path = "crates/canonical" }
+myapp-protocol  = { path = "crates/protocol"  }
+myapp-core      = { path = "crates/core"      }
+myapp-crypto    = { path = "crates/crypto"    }
+myapp-storage   = { path = "crates/storage"   }
+myapp-transport = { path = "crates/transport" }
+myapp-discovery = { path = "crates/discovery" }
+myapp-media     = { path = "crates/media"     }
+myapp-client    = { path = "crates/client"    }
+
+# ---- External dependencies ----------------------------------------------
+tokio = { version = "1.53", default-features = false, features = [
+    "rt-multi-thread", "macros", "sync", "net",
+    "time", "io-util", "signal",
+] }
+thiserror = "2.0"
+bytes = "1.12"
+tracing = "0.1.44"
+tracing-subscriber = { version = "0.3.23", features = ["env-filter"] }
+prost = "0.14"
+prost-types = "0.14"
+ciborium = "0.2.2"
+rusqlite = { version = "0.38", features = ["bundled"] }
+rustls = { version = "0.23.34", default-features = false, features = ["ring", "std"] }
+tokio-rustls = { version = "0.26.5", default-features = false }
+hickory-resolver = "0.26.3"
+ed25519-dalek = { version = "3", default-features = false, features = ["rand_core"] }
+x25519-dalek = { version = "3", default-features = false, features = ["static_secrets", "zeroize"] }
+hkdf = "0.13"
+sha2 = "0.11"
+chacha20poly1305 = "0.11"
+argon2 = "0.6"
+rand_core = "0.10"
+zeroize = "1.9"
+subtle = "2.6"
+proptest = "1.11"
+tokio-test = "0.4.5"
+
+[workspace.lints.rust]
+unsafe_code = "deny"
+unused_must_use = "deny"
+missing_debug_implementations = "warn"
+
+[workspace.lints.clippy]
+all = { level = "deny", priority = -1 }
+pedantic = { level = "warn", priority = -1 }
+module_name_repetitions = "allow"
+missing_errors_doc = "allow"
+missing_panics_doc = "allow"
+
+[profile.release]
+lto = "thin"
+codegen-units = 1
+strip = "symbols"
+opt-level = 3
+
+[profile.dev]
+opt-level = 1

@@ -1,0 +1,19 @@
+# SPDX-License-Identifier: AGPL-3.0-only
+[package]
+name = "myapp-media"
+description = "Media router trait stubs. MVP-0: types only."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+authors.workspace = true
+publish.workspace = true
+
+[dependencies]
+myapp-core = { workspace = true }
+myapp-protocol = { workspace = true }
+thiserror = { workspace = true }
+
+[lints]
+workspace = true

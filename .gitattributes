@@ -1,0 +1,19 @@
+# SPDX-License-Identifier: AGPL-3.0-only
+
+* text=auto eol=lf
+
+*.rs     text eol=lf
+*.toml   text eol=lf
+*.md     text eol=lf
+*.yml    text eol=lf
+*.yaml   text eol=lf
+*.sh     text eol=lf
+*.proto  text eol=lf
+
+*.png  binary
+*.jpg  binary
+*.ico  binary
+*.bin  binary
+
+Cargo.lock      linguist-generated=true -diff
+fuzz/Cargo.lock linguist-generated=true -diff

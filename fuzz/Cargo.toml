@@ -1,0 +1,31 @@
+# SPDX-License-Identifier: AGPL-3.0-only
+[package]
+name = "myapp-fuzz"
+version = "0.0.0"
+edition = "2024"
+publish = false
+
+[package.metadata]
+cargo-fuzz = true
+
+[dependencies]
+libfuzzer-sys = "0.4"
+arbitrary = { version = "1", features = ["derive"] }
+myapp-canonical = { path = "../crates/canonical" }
+myapp-protocol = { path = "../crates/protocol" }
+
+[[bin]]
+name = "canonical_decode"
+path = "fuzz_targets/canonical_decode.rs"
+test = false
+doc = false
+bench = false
+
+[[bin]]
+name = "envelope_decode"
+path = "fuzz_targets/envelope_decode.rs"
+test = false
+doc = false
+bench = false
+
+[workspace]

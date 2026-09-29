@@ -1,0 +1,17 @@
+# SPDX-License-Identifier: AGPL-3.0-only
+#
+# Workspace-level cargo config. NO vendoring (see DEPENDENCIES.md, ADR-013).
+
+[build]
+# No rustflags set here — sanitizer flags are passed by fuzz/ and CI only.
+
+[net]
+# libsignal is a git dependency on github.com; use the git CLI so
+# host-level credentials/SSH keys are honoured.
+git-fetch-with-cli = true
+
+[alias]
+xt = "nextest run --workspace --all-features"
+fmt-check = "fmt --all -- --check"
+lint = "clippy --workspace --all-targets --all-features -- -D warnings"
+deny = "deny check"
