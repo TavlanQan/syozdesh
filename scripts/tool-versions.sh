@@ -14,8 +14,8 @@ readonly RUST_TOOLCHAIN_SOURCE="rustup / static.rust-lang.org"
 # ---- Cargo-installed tools ----------------------------------------------
 # BLOCKING(Phase 5.5-A): fill in with real versions before running
 # scripts/phase5_5.sh.
-readonly CARGO_DENY_VERSION="0.0.0"
-readonly CARGO_DENY_DATE="YYYY-MM-DD"
+readonly CARGO_DENY_VERSION="0.20.2"
+readonly CARGO_DENY_DATE="2026-09-30"
 
 # ---- External binaries ---------------------------------------------------
 readonly EXTERNAL_JQ_MIN_VERSION="1.7"

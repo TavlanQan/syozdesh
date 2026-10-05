@@ -25,9 +25,7 @@ zeroize = { workspace = true }
 subtle = { workspace = true }
 thiserror = { workspace = true }
 
-# BLOCKING(Phase 5.5-A): replace with real 40-char commit SHA before
-# declaring Phase 5 frozen. See docs/PHASE_5_5_A.md §4.
-libsignal-protocol = { git = "https://github.com/signalapp/libsignal", rev = "0000000000000000000000000000000000000000" }
+libsignal-protocol = { git = "https://github.com/signalapp/libsignal", rev = "e8cc2dddd578859b4a029c9c94670b24ce2b616a" }
 
 [lints]
 workspace = true

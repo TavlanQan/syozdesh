@@ -180,7 +180,7 @@ fi
 pass "tests pass"
 
 step_start "cargo deny check"
-if ! cargo deny check; then
+if ! cargo-deny check; then
     fail "cargo-deny reported an issue" \
         "advisories + licenses + bans + sources all pass" \
         "review deny.toml and the output above"
@@ -219,4 +219,4 @@ pass "publish = false enforced"
 printf '\n[Phase 5.5] ====================================================\n'
 printf '[Phase 5.5] ALL %d STEPS PASSED — Phase 5.5-A VALIDATED\n' "${TOTAL_STEPS}"
 printf '[Phase 5.5] ====================================================\n'
-printf '[Phase 5.5] Next: Phase 5.5-B (Forgejo CI validation).\n'
+printf '[Phase 5.5] Next: Phase 5.5-B (GitHub Actions CI validation).\n'

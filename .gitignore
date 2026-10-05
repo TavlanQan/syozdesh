@@ -34,3 +34,6 @@ apps/android/build/
 apps/android/local.properties
 apps/android/.idea/
 apps/android/app/build/
+
+# Tauri generated schemas
+apps/desktop/src-tauri/gen/schemas/

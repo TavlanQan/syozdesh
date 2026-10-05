@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: AGPL-3.0-only
+
 name: CI
 
 on:
@@ -6,9 +7,8 @@ on:
   push:
     branches: [main]
 
-# NOTE(Phase 5.5-B): every `uses:` below MUST be pinned to an immutable
-# 40-hex commit SHA. Floating tags (@v4, @master, ...) are forbidden.
-# Replace <CHECKOUT_ACTION_SHA> during Phase 5.5-B setup.
+permissions:
+  contents: read
 
 env:
   CARGO_TERM_COLOR: always
@@ -17,13 +17,15 @@ env:
 jobs:
   phase5_5_b:
     name: "Phase 5.5-B: bootstrap validation on CI"
-    runs-on: self-hosted
+    runs-on: ubuntu-24.04
+
     steps:
       - name: Checkout pinned commit
-        uses: actions/checkout@<CHECKOUT_ACTION_SHA>
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
-          ref: ${{ forgejo.sha }}
+          ref: ${{ github.sha }}
           fetch-depth: 1
+          persist-credentials: false
 
       - name: Install Rust toolchain
         run: |
@@ -40,7 +42,7 @@ jobs:
         run: |
           source scripts/tool-versions.sh
           cargo install --locked "cargo-deny@${CARGO_DENY_VERSION}"
-          cargo deny --version
+          cargo-deny --version
 
       - name: Run Phase 5.5 gate
         run: ./scripts/phase5_5.sh
