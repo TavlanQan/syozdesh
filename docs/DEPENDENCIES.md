@@ -72,7 +72,8 @@ x25519-dalek3, default-features = false, static_secrets, zeroizeX25519 key agree
 hkdf0.13Domain-separated key derivation
 sha20.11SHA-256 hashing / identifiers / transcripts
 chacha20poly13050.11AEAD building block
-argon20.6Password-derived recovery/backup key material
+argon20.6Passphrase-based KDF; exact application role TBD (Phase 6)
+Not part of recovery_wrap_key derivation.
 rand_core0.10Cryptographic randomness interface
  
 Additional support dependencies such as zeroize and subtle are security-relevant, but are not substituted for the primary cryptographic protocol implementation.
@@ -297,4 +298,7 @@ final cargo-deny check
 final libsignal dependency-tree isolation checks
 final bootstrap gate script execution
  
-Phase 5.5-A is not declared PASS by this document alone. The gate is PASS only after the complete validation sequence succeeds on the actual checkout.
+## 13. Phase 5.5-A status — FINAL
+
+All 17 steps PASS (see commit d010ebc, tag phase5.5-bootstrap-validated).
+Phase 5.5-B: GitHub Actions PASS on ubuntu-24.04.
