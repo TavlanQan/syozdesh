@@ -130,22 +130,69 @@ if ! ./scripts/check-deps.sh; then
 fi
 pass "dependency graph exact-match"
 
-step_start "Root Cargo.lock generation + locked fetch"
-cargo generate-lockfile >/dev/null
-if ! cargo fetch --locked >/dev/null 2>&1; then
-    fail "cargo fetch --locked failed on the freshly generated root lockfile" \
-        "resolution succeeds with the pinned libsignal rev" \
-        "check crates/crypto/Cargo.toml rev, network, output"
+step_start "Committed root Cargo.lock is validated without regeneration"
+if [[ ! -f Cargo.lock ]]; then
+    fail "root Cargo.lock is missing" \
+        "committed root Cargo.lock exists" \
+        "restore the tracked lockfile; regenerate only as a deliberate dependency change"
 fi
-pass "root Cargo.lock generated and locked-fetch OK"
 
-step_start "fuzz/Cargo.lock generation + locked fetch"
-if ! ( cd fuzz && cargo generate-lockfile >/dev/null && cargo fetch --locked >/dev/null 2>&1 ); then
-    fail "fuzz lockfile step failed" \
-        "fuzz workspace resolves independently" \
-        "run: cd fuzz && cargo generate-lockfile && cargo fetch --locked"
+if ! git ls-files --error-unmatch Cargo.lock >/dev/null 2>&1; then
+    fail "root Cargo.lock is not tracked by Git" \
+        "Cargo.lock is a committed bootstrap artifact" \
+        "review and commit Cargo.lock"
 fi
-pass "fuzz/Cargo.lock generated and locked-fetch OK"
+
+if ! git diff --quiet HEAD -- Cargo.lock; then
+    fail "root Cargo.lock differs from HEAD" \
+        "gate validates committed resolution without modifying it" \
+        "review the lockfile diff; do not regenerate dependencies in this gate"
+fi
+
+if ! grep -Fq 'source = "git+https://github.com/signalapp/libsignal?rev=e8cc2dddd578859b4a029c9c94670b24ce2b616a#e8cc2dddd578859b4a029c9c94670b24ce2b616a"' Cargo.lock; then
+    fail "root Cargo.lock has unexpected libsignal revision" \
+        "libsignal resolves to the frozen immutable revision" \
+        "inspect Cargo.lock and crates/crypto/Cargo.toml"
+fi
+
+if ! grep -Fq 'source = "git+https://github.com/signalapp/SparsePostQuantumRatchet.git?tag=v1.6.0#06959b4708f9b7b1e94d0f8cc835f3958c077e94"' Cargo.lock; then
+    fail "root Cargo.lock has unexpected SPQR revision" \
+        "SPQR resolves to v1.6.0 at the frozen immutable commit" \
+        "inspect Cargo.lock and its resolved Git source"
+fi
+
+if ! cargo fetch --locked >/dev/null 2>&1; then
+    fail "cargo fetch --locked failed against the committed root lockfile" \
+        "existing dependency resolution works without modification" \
+        "run cargo fetch --locked and inspect its output"
+fi
+pass "committed root Cargo.lock and critical Git revisions verified"
+
+step_start "Committed fuzz/Cargo.lock is validated without regeneration"
+if [[ ! -f fuzz/Cargo.lock ]]; then
+    fail "fuzz/Cargo.lock is missing" \
+        "independent fuzz lockfile exists" \
+        "restore or deliberately generate and review fuzz/Cargo.lock"
+fi
+
+if ! git ls-files --error-unmatch fuzz/Cargo.lock >/dev/null 2>&1; then
+    fail "fuzz/Cargo.lock is not tracked by Git" \
+        "fuzz/Cargo.lock is a committed bootstrap artifact" \
+        "review and commit fuzz/Cargo.lock"
+fi
+
+if ! git diff --quiet HEAD -- fuzz/Cargo.lock; then
+    fail "fuzz/Cargo.lock differs from HEAD" \
+        "gate validates committed resolution without modifying it" \
+        "review the lockfile diff; do not regenerate dependencies in this gate"
+fi
+
+if ! ( cd fuzz && cargo fetch --locked >/dev/null 2>&1 ); then
+    fail "cargo fetch --locked failed against the committed fuzz lockfile" \
+        "fuzz workspace resolves independently without modifying its lockfile" \
+        "run: cd fuzz && cargo fetch --locked"
+fi
+pass "committed fuzz/Cargo.lock verified"
 
 step_start "cargo check --workspace --all-targets --locked"
 if ! cargo check --workspace --all-targets --locked; then
