@@ -12,8 +12,7 @@ readonly RUST_TOOLCHAIN_DATE="2026-09-03"
 readonly RUST_TOOLCHAIN_SOURCE="rustup / static.rust-lang.org"
 
 # ---- Cargo-installed tools ----------------------------------------------
-# BLOCKING(Phase 5.5-A): fill in with real versions before running
-# scripts/phase5_5.sh.
+# Pinned versions are recorded below and verified by scripts/phase5_5.sh.
 readonly CARGO_DENY_VERSION="0.20.2"
 readonly CARGO_DENY_DATE="2026-09-30"
 
